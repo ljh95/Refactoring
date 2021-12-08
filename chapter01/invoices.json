@@ -1,0 +1,19 @@
+[
+  {
+    "customer": "BigCo",
+    "performances": [
+      {
+        "playID": "hamlet",
+        "adience": 55
+      },
+      {
+        "playID": "as-like",
+        "adience": 35
+      },
+      {
+        "playID": "othello",
+        "adience": 40
+      }
+    ]
+  }
+]
