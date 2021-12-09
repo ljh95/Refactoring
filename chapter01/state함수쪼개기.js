@@ -31,27 +31,29 @@ const plays = {
   }
 };
 function statement(invoice, plays){
-  let totalAmount = 0;
-  let volumeCredits = 0;
   let result = `청구 내역 (고객명: ${invoice.customer})\n`;
-  const format = new Intl.NumberFormat("en-US", { 
-    style: "currency", 
-    currency: "USD", 
-    minimumFractionDigits: 2
-  }).format;
-
+  
   for(let perf of invoice.performances) {
-    // 포인트를 적립한다.
-    volumeCredits += volumeCreditsFor(perf);
-
-    // 청구 내역을 출력한다.
-    result += `  ${playFor(perf).name}: ${format(amountFor(perf, playFor(perf)) / 100)} (${perf.audience}석)\n`;
-    totalAmount += amountFor(perf, playFor(perf));
+    result += `  ${playFor(perf).name}: ${usd(amountFor(perf, playFor(perf)))} (${perf.audience}석)\n`;
   }
 
-  result += `총액: ${format(totalAmount/100)}\n`;
-  result += `적립 포인트: ${volumeCredits}점\n`;
+  result += `총액: ${usd(totalAmount())}\n`;
+  result += `적립 포인트: ${totalVolumeCredits()}점\n`;
   return result;
+
+
+
+
+
+  // 
+
+  function totalAmount() {
+    let result = 0;
+    for(let perf of invoice.performances) {
+      result += amountFor(perf, playFor(perf));
+    }
+    return result;
+  }
   
   function amountFor(aPerformance) { // 값이 바뀌지 않는 변수는 매개변수로 전달
     let result = 0; // 함수의 반환값에는 항상 resultfk gksek.
@@ -86,6 +88,22 @@ function statement(invoice, plays){
     result += Math.max(aPerformance.audience - 30, 0);
 
     if("comedy" === playFor(aPerformance).type) result += Math.floor(aPerformance.audience / 5);
+    return result;
+  }
+
+  function usd(aNumber) {
+    return new Intl.NumberFormat("en-US", { 
+      style: "currency", 
+      currency: "USD", 
+      minimumFractionDigits: 2
+    }).format(aNumber / 100);
+  }
+
+  function totalVolumeCredits() {
+    let result = 0;
+    for(let perf of invoice.performances) {
+      result += volumeCreditsFor(perf);
+    }
     return result;
   }
 }
