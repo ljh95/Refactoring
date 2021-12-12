@@ -44,7 +44,7 @@ function renderPlainText(data, plays){
     result += `  ${perf.play.name}: ${usd(perf.amount)} (${perf.audience}석)\n`;
   }
 
-  result += `총액: ${data.totalAmount}\n`;
+  result += `총액: ${usd(data.totalAmount)}\n`;
   result += `적립 포인트: ${data.totalVolumeCredits}점\n`;
   return result;
 }
