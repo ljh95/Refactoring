@@ -26,7 +26,14 @@ class PerformanceCalculator { // 공연료 계산기 클래스
     }
   
     return result;
-    
+  }
+
+  get volumeCredits() {
+    let result = 0;
+    result += Math.max(this.performance.audience - 30, 0);
+
+    if("comedy" === this.play.type) result += Math.floor(this.performance.audience / 5);
+    return result;
   }
 }
 
@@ -43,8 +50,8 @@ export default function createStatementData(invoice, plays){
 
     const result = Object.assign({}, aPerformance); // 얕은 복사
     result.play = calculator.play; // 중간 데이터에 연극정보를 저장
-    result.amount = amountFor(result);
-    result.volumeCredits = volumeCreditsFor(result);
+    result.amount = calculator.amount;
+    result.volumeCredits = calculator.volumeCredits;
     return result;
   }
 
