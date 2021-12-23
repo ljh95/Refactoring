@@ -4,6 +4,6 @@ import assert from 'node:assert'
 describe('province', function() {
   it('shorfall', function() {
     const asia = new Province(sampleProvinceData()); // 픽스처 설명
-    assert.equal(asia.shortfall, 6); // 검증
+    assert.equal(asia.shortfall, 5); // 검증
   })
 })
